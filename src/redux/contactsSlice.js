@@ -1,17 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
-/**
- * TODO try immutable change state
- */
-
-const contactsInitialState = [
-  { name: 'Ivan', number: '0930339155', id: '1' },
-  { name: 'Ostapenko', number: '0681853010', id: '2' },
-];
-// const contactsInitialState = {
-//   contacts: [{ name: 'IS', number: '0930339155', id: 1 }],
-// };
+const contactsInitialState = [];
 
 const contactsSlice = createSlice({
   name: 'contacts',
