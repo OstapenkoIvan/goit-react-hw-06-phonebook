@@ -10,6 +10,14 @@
   font-weight: 500;
 }
 
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
 .listItem {
   margin: 0 auto;
   width: 180px;

@@ -1,32 +1,18 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
-function ContactForm({ onSubmit }) {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleInputChange = e => {
-    const { name: inputName, value: inputValue } = e.currentTarget;
-    switch (inputName) {
-      case 'name':
-        setName(inputValue);
-        return;
-      case 'number':
-        setNumber(inputValue);
-        return;
-      default:
-        return;
-    }
-  };
+function ContactForm() {
+  const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmit(name, number);
+    const name = e.target.elements.name.value;
+    const number = e.target.elements.number.value;
+    dispatch(addContact(name, number));
 
-    setName('');
-    setNumber('');
+    e.target.reset();
   };
 
   return (
@@ -42,8 +28,6 @@ function ContactForm({ onSubmit }) {
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        value={name}
-        onChange={handleInputChange}
       />
       <label htmlFor="number" className={s.label}>
         Phone number
@@ -51,11 +35,10 @@ function ContactForm({ onSubmit }) {
       <input
         className={s.input}
         type="tel"
+        id="number"
         name="number"
         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-        value={number}
-        onChange={handleInputChange}
         required
       />
       <button type="submit" className={s.submitBtn}>
@@ -64,9 +47,5 @@ function ContactForm({ onSubmit }) {
     </form>
   );
 }
-
-ContactForm.propTypes = {
-  children: PropTypes.func,
-};
 
 export default ContactForm;

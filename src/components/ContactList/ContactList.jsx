@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getFilter, getContacts } from '../../redux/selectors.js';
 import ContactListItem from '../ContactListItem/ContactListItem';
+import s from './ContactList.module.css';
 
-const ContactList = ({ data, onClick }) => {
-  return data.map(data => (
-    <ContactListItem key={data.id} data={data} onClick={onClick} />
-  ));
-  // return data.map(({ id, name, number }) => (
-  //   <li key={id} className={s.listItem}>
-  //     <p className={s.pEl}>{name}</p>:{' '}
-  //     <span className={s.spanEl}>{number}</span>
-  //     <button className={s.btn} type="button" onClick={() => removeContact(id)}>
-  //       Delete
-  //     </button>
-  //   </li>
-  // ));
-};
+const ContactList = () => {
+  const contactList = useSelector(getContacts);
+  const filterContent = useSelector(getFilter);
 
-ContactList.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClick: PropTypes.func.isRequired,
+  const contactsFiltered = contactList.filter(contact =>
+    contact.name.toLowerCase().includes(filterContent.toLowerCase())
+  );
+
+  return (
+    <ul className={s.list}>
+      {contactsFiltered.map(contact => (
+        <li key={contact.id} className={s.listItem}>
+          <ContactListItem data={contact} />
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export default ContactList;
