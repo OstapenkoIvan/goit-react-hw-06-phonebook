@@ -5,10 +5,6 @@ import Filter from 'components/Filter/Filter';
 import ErrorBoundary from 'utils/ErrorBoundaries';
 import s from 'components/App.module.css';
 
-/**
- * TODO use MaterialUI for components design
- */
-
 function App() {
   return (
     <Container>
